@@ -1,0 +1,30 @@
+# Node
+node_modules/
+.next/
+dist/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+venv/
+env/
+*.egg-info/
+
+# Django
+db.sqlite3
+media/
+staticfiles/
+
+# VS Code
+.vscode/
+
+# Logs and temp files
+*.log
+*.tmp
+.DS_Store
+
+# OS/IDE
+Thumbs.db
+.idea/
