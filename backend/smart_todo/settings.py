@@ -1,11 +1,14 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv 
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--^xz0bfcw%4tl0v7*j*i&kf*w8_cy(9p*1l(lbga%3nj%qa@1m'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY") 
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
@@ -54,20 +57,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'smart_todo.wsgi.application'
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('SUPABASE_DB_NAME', 'smart_todo_db'),
-        'USER': os.getenv('SUPABASE_DB_USER', 'postgres'),
-        'PASSWORD': os.getenv('SUPABASE_DB_PASSWORD', '1234'),
-        'HOST': os.getenv('SUPABASE_DB_HOST', 'localhost'),
-        'PORT': os.getenv('SUPABASE_DB_PORT', '5433'),
+        'NAME': os.getenv('SUPABASE_DB_NAME'),
+        'USER': os.getenv('SUPABASE_DB_USER'),
+        'PASSWORD': os.getenv('SUPABASE_DB_PASSWORD'),
+        'HOST': os.getenv('SUPABASE_DB_HOST'),
+        'PORT': os.getenv('SUPABASE_DB_PORT'),
     }
 }
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    os.getenv('FRONTEND_URL', 'https://your-production-frontend.com'),
+    os.getenv('FRONTEND_URL'),
 ]
 
 REST_FRAMEWORK = {
@@ -89,5 +93,3 @@ LOGGING = {
         'level': 'INFO',
     },
 }
-
-XAI_API_KEY = os.getenv('XAI_API_KEY', '')

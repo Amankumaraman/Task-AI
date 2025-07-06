@@ -2,8 +2,12 @@ import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 from nltk.tokenize import word_tokenize
 import requests
+from dotenv import load_dotenv
 import json
 from datetime import datetime, timedelta
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Download NLTK data (run once)
 nltk.download('vader_lexicon')
@@ -12,7 +16,7 @@ nltk.download('punkt')
 class AIManager:
     def __init__(self):
         self.sia = SentimentIntensityAnalyzer()
-        self.groq_api_key = ''  # Hardcoded API key
+        self.groq_api_key = os.getenv('GROQ_API_KEY')
         if not self.groq_api_key:
             raise ValueError("GROQ_API_KEY is not set")
 
