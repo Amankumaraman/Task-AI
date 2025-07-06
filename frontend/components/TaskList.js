@@ -32,18 +32,18 @@ export default function TaskList({ onEditTask }) {
     if (filter.status) params.status = filter.status;
     if (filter.priority) params.priority_score__gte = filter.priority;
     
-    const response = await axios.get('http://localhost:8000/api/tasks/', { params });
+    const response = await axios.get('https://task-ai-gpyr.onrender.com/api/tasks/', { params });
     setTasks(response.data);
   };
 
   const fetchCategories = async () => {
-    const response = await axios.get('http://localhost:8000/api/categories/');
+    const response = await axios.get('https://task-ai-gpyr.onrender.com/api/categories/');
     setCategories(response.data);
   };
 
   const exportTasks = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/tasks/');
+      const response = await axios.get('https://task-ai-gpyr.onrender.com/api/tasks/');
       const data = JSON.stringify(response.data, null, 2);
       const blob = new Blob([data], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
@@ -66,7 +66,7 @@ export default function TaskList({ onEditTask }) {
       try {
         const tasks = JSON.parse(e.target.result);
         for (const task of tasks) {
-          await axios.post('http://localhost:8000/api/tasks/', task);
+          await axios.post('https://task-ai-gpyr.onrender.com/api/tasks/', task);
         }
         fetchTasks();
       } catch (error) {
