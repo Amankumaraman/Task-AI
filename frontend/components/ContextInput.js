@@ -18,7 +18,7 @@ export default function ContextInput() {
   const fetchContextEntries = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:8000/api/context-entries/');
+      const response = await axios.get('https://task-ai-gpyr.onrender.com/api/context-entries/');
       setContextEntries(response.data);
     } catch (error) {
       setError('Failed to load context entries');
@@ -36,7 +36,7 @@ export default function ContextInput() {
 
     try {
       setLoading(true);
-      await axios.post('http://localhost:8000/api/context-entries/', context);
+      await axios.post('https://task-ai-gpyr.onrender.com/api/context-entries/', context);
       setContext({ content: '', source_type: 'NOTE' });
       fetchContextEntries();
       setError(null);
