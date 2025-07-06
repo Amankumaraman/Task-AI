@@ -12,7 +12,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', os.getenv('PRODUCTION_HOST', 'task-ai-gpyr.onrender.com')]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', os.getenv('PRODUCTION_HOST', ''),'task-ai-gpyr.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
