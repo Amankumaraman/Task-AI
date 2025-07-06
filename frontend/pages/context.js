@@ -12,7 +12,7 @@ export default function ContextPage() {
 
   const fetchContext = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/context-entries/');
+      const response = await axios.get('https://task-ai-gpyr.onrender.com/api/context-entries/');
       setContextList(response.data);
     } catch (error) {
       console.error('Error fetching context:', error);
@@ -26,7 +26,7 @@ export default function ContextPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8000/api/context-entries/', context);
+      await axios.post('https://task-ai-gpyr.onrender.com/api/context-entries/', context);
       setContext({ content: '', source_type: 'NOTE' });
       fetchContext();
     } catch (error) {
@@ -37,7 +37,7 @@ export default function ContextPage() {
 
   const handleProcessWithAI = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/api/tasks/ai_suggestions/', {
+      const response = await axios.post('https://task-ai-gpyr.onrender.com/api/tasks/ai_suggestions/', {
         task: { title: '', description: context.content },
         context_entries: [{ content: context.content, source_type: context.source_type }],
       });
