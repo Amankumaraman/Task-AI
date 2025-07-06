@@ -38,7 +38,7 @@ const TaskForm = ({ taskToEdit, onTaskAdded, categories }) => {
   useEffect(() => {
     const fetchContext = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/context-entries/');
+        const response = await axios.get('https://task-ai-gpyr.onrender.com/api/context-entries/');
         setContextEntries(response.data);
       } catch (error) {
         console.error('Error fetching context:', error);
@@ -54,7 +54,7 @@ const TaskForm = ({ taskToEdit, onTaskAdded, categories }) => {
   const handleGetSuggestions = async () => {
     try {
       setLoading(true);
-      const response = await axios.post('http://localhost:8000/api/tasks/ai_suggestions/', {
+      const response = await axios.post('https://task-ai-gpyr.onrender.com/api/tasks/ai_suggestions/', {
         task: { title: formData.title, description: formData.description },
         context_entries: contextEntries,
       });
@@ -96,9 +96,9 @@ const TaskForm = ({ taskToEdit, onTaskAdded, categories }) => {
       };
 
       if (taskToEdit) {
-        await axios.put(`http://localhost:8000/api/tasks/${taskToEdit.id}/`, taskData);
+        await axios.put(`https://task-ai-gpyr.onrender.com/api/tasks/${taskToEdit.id}/`, taskData);
       } else {
-        await axios.post('http://localhost:8000/api/tasks/', taskData);
+        await axios.post('https://task-ai-gpyr.onrender.com/api/tasks/', taskData);
       }
       
       onTaskAdded();
