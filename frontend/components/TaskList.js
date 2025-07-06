@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { toast } from 'react-toastify';
 
 const localizer = momentLocalizer(moment);
 
@@ -13,6 +14,8 @@ export default function TaskList({ onEditTask }) {
   const [filter, setFilter] = useState({ category: '', status: '', priority: '' });
   const [showCalendar, setShowCalendar] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showQuickAdd, setShowQuickAdd] = useState(false);
+  const [quickTask, setQuickTask] = useState({ title: '', deadline: '' });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +44,34 @@ export default function TaskList({ onEditTask }) {
     setCategories(response.data);
   };
 
+  const handleQuickAdd = async (e) => {
+    e.preventDefault();
+    if (!quickTask.title.trim()) {
+      toast.error('Title is required');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await axios.post('https://task-ai-gpyr.onrender.com/api/tasks/', {
+        title: quickTask.title.trim(),
+        deadline: quickTask.deadline || null,
+        priority_score: 0.5,
+        category_id: categories[0]?.id || null,
+        status: 'PENDING',
+      });
+      toast.success('Task added successfully');
+      setQuickTask({ title: '', deadline: '' });
+      setShowQuickAdd(false);
+      fetchTasks();
+    } catch (error) {
+      toast.error('Failed to add task');
+      console.error('Quick add failed:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const exportTasks = async () => {
     try {
       const response = await axios.get('https://task-ai-gpyr.onrender.com/api/tasks/');
@@ -52,7 +83,9 @@ export default function TaskList({ onEditTask }) {
       link.download = 'tasks-export.json';
       link.click();
       URL.revokeObjectURL(url);
+      toast.success('Tasks exported successfully');
     } catch (error) {
+      toast.error('Export failed');
       console.error('Export failed:', error);
     }
   };
@@ -69,7 +102,9 @@ export default function TaskList({ onEditTask }) {
           await axios.post('https://task-ai-gpyr.onrender.com/api/tasks/', task);
         }
         fetchTasks();
+        toast.success('Tasks imported successfully');
       } catch (error) {
+        toast.error('Import failed');
         console.error('Import failed:', error);
       }
     };
@@ -104,35 +139,35 @@ export default function TaskList({ onEditTask }) {
       <div className="card">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <h2 className="text-2xl font-bold text-gradient">Your Tasks</h2>
-        <div className="flex flex-wrap gap-2">
-  {/* Show/Hide Calendar Button */}
-  <button 
-    onClick={() => setShowCalendar(!showCalendar)} 
-    className="button button-outline px-4 py-2 rounded-xl transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-  >
-    {showCalendar ? 'Hide Calendar' : 'Show Calendar'}
-  </button>
-
-  {/* Export Button */}
-  <button 
-    onClick={exportTasks} 
-    className="button button-secondary px-4 py-2 rounded-xl transition-all duration-200 hover:bg-secondary/90"
-  >
-    Export Tasks
-  </button>
-
-  {/* Import Button */}
-  <label className="button button-primary px-4 py-2 rounded-xl cursor-pointer transition-all duration-200 hover:bg-primary/90">
-    Import Tasks
-    <input
-      type="file"
-      accept=".json"
-      onChange={importTasks}
-      className="hidden"
-    />
-  </label>
-</div>
-
+          <div className="flex flex-wrap gap-2">
+            <button 
+              onClick={() => setShowQuickAdd(true)} 
+              className="button button-primary px-4 py-2 rounded-xl transition-all duration-200 hover:bg-primary/90"
+            >
+              Quick Add Task
+            </button>
+            <button 
+              onClick={() => setShowCalendar(!showCalendar)} 
+              className="button button-outline px-4 py-2 rounded-xl transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+            >
+              {showCalendar ? 'Hide Calendar' : 'Show Calendar'}
+            </button>
+            <button 
+              onClick={exportTasks} 
+              className="button button-secondary px-4 py-2 rounded-xl transition-all duration-200 hover:bg-secondary/90"
+            >
+              Export Tasks
+            </button>
+            <label className="button button-primary px-4 py-2 rounded-xl cursor-pointer transition-all duration-200 hover:bg-primary/90">
+              Import Tasks
+              <input
+                type="file"
+                accept=".json"
+                onChange={importTasks}
+                className="hidden"
+              />
+            </label>
+          </div>
         </div>
 
         <div className="flex flex-wrap gap-4 mb-6">
@@ -175,6 +210,56 @@ export default function TaskList({ onEditTask }) {
               style={{ height: 500 }}
               className="rbc-calendar"
             />
+          </div>
+        )}
+
+        {showQuickAdd && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="card glass max-w-md w-full mx-4">
+              <h3 className="text-xl font-bold mb-4 text-gradient">Quick Add Task</h3>
+              <form onSubmit={handleQuickAdd} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Title *
+                  </label>
+                  <input
+                    type="text"
+                    value={quickTask.title}
+                    onChange={(e) => setQuickTask({ ...quickTask, title: e.target.value })}
+                    placeholder="Task title"
+                    className="input"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Deadline (optional)
+                  </label>
+                  <input
+                    type="datetime-local"
+                    value={quickTask.deadline}
+                    onChange={(e) => setQuickTask({ ...quickTask, deadline: e.target.value })}
+                    className="input"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="button button-primary flex-1"
+                  >
+                    {loading ? 'Adding...' : 'Add Task'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowQuickAdd(false)}
+                    className="button button-ghost"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         )}
 
