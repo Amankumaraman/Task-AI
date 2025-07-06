@@ -12,7 +12,15 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', os.getenv('PRODUCTION_HOST', ''),'task-ai-gpyr.onrender.com']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    os.getenv('PRODUCTION_HOST', ''),
+    'task-ai-gpyr.onrender.com',
+    'task-ai-lilac.vercel.app',
+    'task-6xqcpoicn-aman-kumars-projects-ceb15148.vercel.app',
+]
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -72,6 +80,8 @@ DATABASES = {
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     os.getenv('FRONTEND_URL'),
+    "https://task-ai-lilac.vercel.app",
+    "https://task-6xqcpoicn-aman-kumars-projects-ceb15148.vercel.app",
 ]
 
 REST_FRAMEWORK = {
