@@ -5,6 +5,8 @@ import requests
 from dotenv import load_dotenv
 import json
 from datetime import datetime, timedelta
+import os
+
 
 # Load environment variables from .env file
 load_dotenv()
