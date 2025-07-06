@@ -5,6 +5,11 @@ A full-stack task management application with AI-powered features for task prior
 Built with **Next.js**, **Tailwind CSS**, **Django REST Framework**, and **Groq API** for AI integration.
 
 ---
+## 🔗 Live URLs
+
+- 🌐 Backend: [https://task-ai-gpyr.onrender.com](https://task-ai-gpyr.onrender.com)
+- 🌐 Frontend: [https://task-ai-lilac.vercel.app](https://task-ai-lilac.vercel.app)
+
 
 ## 🚀 Features
 
@@ -53,7 +58,7 @@ Built with **Next.js**, **Tailwind CSS**, **Django REST Framework**, and **Groq 
    ```bash
    git clone https://github.com/Amankumaraman/Task-AI
    cd Task-AI/backend
-````
+   ```
 
 2. **Create virtual environment & install dependencies**:
 
@@ -108,8 +113,8 @@ Built with **Next.js**, **Tailwind CSS**, **Django REST Framework**, and **Groq 
 
 ## 🧪 Running the App
 
-* Backend: [http://localhost:8000](http://localhost:8000)
-* Frontend: [http://localhost:3000](http://localhost:3000)
+- Backend: http://localhost:8000  
+- Frontend: http://localhost:3000
 
 ---
 
@@ -117,27 +122,26 @@ Built with **Next.js**, **Tailwind CSS**, **Django REST Framework**, and **Groq 
 
 ### 🧾 Task Endpoints
 
-* `GET /api/tasks/` — List all tasks, supports filtering.
-* `POST /api/tasks/` — Create a new task.
-* `PUT /api/tasks/<id>/` — Update task by ID.
+- `GET /api/tasks/` — List all tasks, supports filtering.
+- `POST /api/tasks/` — Create a new task.
+- `PUT /api/tasks/<id>/` — Update task by ID.
 
 ### 📂 Category
 
-* `GET /api/categories/` — List all task categories.
+- `GET /api/categories/` — List all task categories.
 
 ### 💬 Context
 
-* `POST /api/context-entries/` — Add a context entry.
-* `GET /api/context-entries/` — List context entries with insights.
+- `POST /api/context-entries/` — Add a context entry.
+- `GET /api/context-entries/` — List context entries with insights.
 
 ### 🤖 AI Suggestions
 
-* `POST /api/tasks/ai_suggestions/` — Get AI-based suggestions:
-
-  * Priority
-  * Deadline
-  * Enhanced description
-  * Category
+- `POST /api/tasks/ai_suggestions/` — Get AI-based suggestions:
+  - Priority
+  - Deadline
+  - Enhanced description
+  - Category
 
 ---
 
@@ -172,39 +176,36 @@ Built with **Next.js**, **Tailwind CSS**, **Django REST Framework**, and **Groq 
 
 (See `requirements.txt`)
 
-* `Django`: Web framework
-* `djangorestframework`: REST APIs
-* `nltk`: NLP tools for sentiment and keyword extraction
-* `groq`: For AI suggestions
+- `Django`: Web framework
+- `djangorestframework`: REST APIs
+- `nltk`: NLP tools for sentiment and keyword extraction
+- `groq`: For AI suggestions
 
 ### 🔜 Frontend
 
 (See `package.json`)
 
-* `axios`: API calls
-* `tailwindcss`: Styling
-* `react-toastify`: Toast notifications
-* `react-big-calendar`: Task calendar view
-* `moment`: Date/time utilities
+- `axios`: API calls
+- `tailwindcss`: Styling
+- `react-toastify`: Toast notifications
+- `react-big-calendar`: Task calendar view
+- `moment`: Date/time utilities
 
 ---
 
 ## 📝 Notes
 
-* Ensure PostgreSQL is correctly configured in `.env`.
-* The application uses Groq API + NLTK for AI insights.
-* Task list refreshes after every add/edit.
-* Toasts notify you of success or errors.
-* Add screenshots of UI in `screenshots/` and update paths in this README.
+- Ensure PostgreSQL is correctly configured in `.env`.
+- The application uses Groq API + NLTK for AI insights.
+- Task list refreshes after every add/edit.
+- Toasts notify you of success or errors.
+- Add screenshots of UI in `screenshots/` and update paths in this README.
 
 ---
 
 ## 👨‍💻 Author
 
-**Aman Kumar**
-GitHub: [@Amankumaraman](https://github.com/Amankumaraman)
-LinkedIn: [Aman Kumar](https://linkedin.com/in/aman-kumar-here-for-you)
+**Aman Kumar**  
+GitHub: [@Amankumaraman](https://github.com/Amankumaraman)  
+LinkedIn: [Aman Kumar](https://linkedin.com/in/aman-kumar-here-for-you)  
 Portfolio: [devaiak.vercel.app](https://devaiak.vercel.app)
-
----
-
