@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function ContextInput() {
   const [context, setContext] = useState({
@@ -9,7 +10,6 @@ export default function ContextInput() {
   });
   const [contextEntries, setContextEntries] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchContextEntries();
@@ -21,7 +21,7 @@ export default function ContextInput() {
       const response = await axios.get('https://task-ai-gpyr.onrender.com/api/context-entries/');
       setContextEntries(response.data);
     } catch (error) {
-      setError('Failed to load context entries');
+      toast.error('Failed to load context entries');
     } finally {
       setLoading(false);
     }
@@ -30,7 +30,7 @@ export default function ContextInput() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!context.content.trim()) {
-      setError('Content is required');
+      toast.error('Content is required');
       return;
     }
 
@@ -39,9 +39,9 @@ export default function ContextInput() {
       await axios.post('https://task-ai-gpyr.onrender.com/api/context-entries/', context);
       setContext({ content: '', source_type: 'NOTE' });
       fetchContextEntries();
-      setError(null);
+      toast.success('Context entry added successfully');
     } catch (error) {
-      setError('Failed to save context entry');
+      toast.error('Failed to save context entry');
     } finally {
       setLoading(false);
     }
@@ -53,12 +53,6 @@ export default function ContextInput() {
         <h2 className="text-2xl font-bold mb-6 text-gradient">Add Context</h2>
         
         <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <div className="p-3 bg-danger/10 text-danger rounded-lg">
-              {error}
-            </div>
-          )}
-
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Content *
