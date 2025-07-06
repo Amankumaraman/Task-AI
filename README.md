@@ -1,4 +1,3 @@
-````markdown
 # 🧠 Smart Todo List with AI
 
 A full-stack task management application with AI-powered features for task prioritization, deadline suggestions, and context-aware recommendations.
